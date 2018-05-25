@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# replace /etc/confluent/docker/ensure
+# the ZK check fails incorrectly when using SASL_PLAIN for kafka but not ZK.
+set -o nounset \
+    -o errexit \
+    -o verbose \
+    -o xtrace
+export KAFKA_DATA_DIRS=${KAFKA_DATA_DIRS:-"/var/lib/kafka/data"}
+echo "===> Check if $KAFKA_DATA_DIRS is writable ..."
+dub path "$KAFKA_DATA_DIRS" writable
